@@ -13,6 +13,7 @@
         table {
             border-collapse: separate;
             border-spacing: 4px 10px;
+            margin: auto;
         }
         tr {
             margin-bottom: 20px;
@@ -46,10 +47,10 @@
         }
         #pile-container {
             width: 650px;
-            display: inline-block;
-            border: solid 1px;
             height: 300px;
             margin-top: 0px;
+            display: inline-block;
+            border: 1px solid;
             position: relative;
             overflow: hidden;
         }
@@ -58,7 +59,8 @@
             height: 300px;
             margin-top: 0px;
             display: inline-block;
-            vertical-align : bottom;
+            position: relative;
+            vertical-align: bottom;
         }
         #pile {
             width: 100%;
@@ -260,7 +262,7 @@
                     divPile.appendChild(p)
                 }
                 p = document.createElement('p')
-                p.textContent = "Pile d’exécution"
+                p.textContent = "Pile d’appels récursifs"
                 p.className = "centrer"
                 divPile.appendChild(p)
             }
