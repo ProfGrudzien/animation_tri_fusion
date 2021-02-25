@@ -196,6 +196,7 @@
     <input id="btn-prev" type="button" value="<"/>
     <input type="range" id="index" min="0" max="11">
     <input id="btn-next" type="button" value=">"/>
+    <p class="centrer">Nombre de comparaisons : <span id="nbComparaisons"></span></p>
     <script language="javascript">
         var index = 0
         const etapes = []
@@ -232,6 +233,7 @@
             } else if (i >= etapes.length) {
                 index = etapes.length - 1
             } else {
+                document.getElementById("nbComparaisons").textContent = etapes[i].nbComparaisons
                 for(col=0; col<16; col++) {
                     for(row=0; row<5; row++) {
                         const td = document.getElementById(`${row}-${col}`)
@@ -269,7 +271,7 @@
             range.value = index
         }
         function nouvelleEtape() {
-            const e = {valeurs:{}, classes:{}, pile:JSON.parse(JSON.stringify(pile)), out: false}
+            const e = {nbComparaisons:0, valeurs:{}, classes:{}, pile:JSON.parse(JSON.stringify(pile)), out: false}
             if (etapes.length == 0) {
                 for(col=0; col<16; col++) {
                     for(row=0; row<5; row++) {
@@ -279,6 +281,7 @@
                 }
             } else {
                 const last = etapes[etapes.length-1]
+                e.nbComparaisons = last.nbComparaisons
                 e.valeurs = JSON.parse(JSON.stringify(last.valeurs))
                 e.classes = JSON.parse(JSON.stringify(last.classes))
             }
@@ -287,6 +290,7 @@
         }
 
         function fusion(L1, L2, row, col_0) {
+            const e = nouvelleEtape()
             var i = 0
             var j = 0
             const L = new Array(L1.length + L2.length);
@@ -298,6 +302,7 @@
                     L[i+j] = L2[j];
                     j++;
                 }
+                e.nbComparaisons += 1
             }  
             while (i < L1.length) {  
                 L[i+j] = L1[i];
@@ -307,7 +312,6 @@
                 L[i+j] = L2[j];
                 j++;
             }
-            const e = nouvelleEtape()
             e.out = true
             for (col=0; col<L.length; col++) {
                 e.valeurs[`${row}-${col+col_0}`] = L[col]
